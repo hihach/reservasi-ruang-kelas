@@ -2,13 +2,12 @@
 
 @section('content')
     {{-- Header --}}
-    <div class="flex items-center justify-between ms-15">
+    <div class="flex items-center justify-between mx-15">
         {{-- Side left --}}
         <div>
             <h1 class="text-3xl font-semibold ">Selamat datang, Na Jemin</h1>
             <p class="text-gray-600 mt-2">Jadwalkan kegiatanmu dengan mudah</p>
 
-            {{-- Tombol Reservasi --}}
             <button onclick="window.location='{{ route('ruangan') }}'"
                 class="bg-secondary mt-3 hover:bg-blue-600 text-white px-5 py-2 rounded shadow transition-200 cursor-pointer transition-200">
                 Reservasi sekarang
@@ -16,7 +15,7 @@
         </div>
 
         {{-- Side right --}}
-        <div class="w-1/4 me-15">
+        <div class="w-1/4 ">
             <div class="bg-white p-5 shadow-md rounded-lg">
                 <h3 class="text-lg font-bold flex items-center mb-4">
                     <i class="bi bi-calendar3 mr-4"></i>
@@ -51,12 +50,9 @@
 
     {{-- List lantai --}}
     <div class="mt-10 mx-15">
-
         <h2 class="text-xl font-semibold mb-4">Pilih Lantai</h2>
-
         <div class="grid grid-cols-5 gap-4">
-
-            {{-- Card Lantai 1 --}}
+            {{-- Lantai 1 --}}
             <a href="{{ route('ruangan') }}" class="block">
                 <div class="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition-200 cursor-pointer">
                     <div class="flex justify-center items-center space-x-2 mb-2">
@@ -64,10 +60,8 @@
                         <span class="font-semibold">Lantai 1</span>
                     </div>
                     <p class="text-gray-600 text-center text-sm">10 ruang tersedia</p>
-
                 </div>
             </a>
-
         </div>
     </div>
 @endsection

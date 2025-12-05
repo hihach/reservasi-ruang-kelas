@@ -4,10 +4,10 @@
     <div class="p-6">
 
         {{-- Header --}}
-        <div class="flex justify-between items-start">
+        <div class="flex justify-between items-start mx-8">
 
             {{-- Side Left --}}
-            <div class="flex items-start ms-8">
+            <div class="flex items-start">
 
                 {{-- Tombol back --}}
                 <button onclick="window.history.back()"
@@ -29,8 +29,6 @@
             </div>
 
         </div>
-
-
 
         {{-- List jam --}}
         <div class="grid grid-cols-5 gap-6 mt-10 mx-8">
@@ -57,8 +55,6 @@
                     Ajukan
                 </button>
             </div>
-
         </div>
-
     </div>
 @endsection

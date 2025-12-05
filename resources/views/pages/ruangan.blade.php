@@ -3,7 +3,7 @@
 @section('content')
     <div class="p-6">
         {{-- Header --}}
-        <div class="flex justify-between ms-8 items-center mb-6">
+        <div class="flex justify-between mx-8 items-center mb-6">
             {{-- Side left --}}
             <!-- x-data = state Alpine untuk buka/tutup dropdown -->
             <div x-data="{ open: false }" class="relative inline-block">
@@ -45,10 +45,8 @@
                 </div>
             </div>
 
-            <!-- ============================== -->
-
             {{-- Side right --}}
-            <div class="relative me-8 w-80">
+            <div class="relative w-80">
 
                 <!-- Icon Search -->
                 <i class="bi bi-search absolute left-3 top-2 text-gray-400"></i>
@@ -58,10 +56,7 @@
                     class="w-full pl-10 pr-3 py-2 rounded-lg shadow-md cursor-pointer bg-white 
                            focus:ring-2 focus:ring-blue-400 outline-none transition">
             </div>
-
         </div>
-
-        <!-- ============================== -->
 
         <!-- list ruangan -->
         <div class="grid grid-cols-4 mx-8 gap-4">
@@ -90,7 +85,6 @@
                     Tidak Tersedia
                 </span>
             </div>
-
         </div>
     </div>
 @endsection

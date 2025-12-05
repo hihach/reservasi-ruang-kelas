@@ -9,19 +9,16 @@
                 <h1 class="text-xl font-semibold">Form Pengajuan Ruangan</h1>
                 <p class="text-gray-500 text-sm">Isi data reservasi untuk kegiatanmu</p>
             </div>
-            
+
             {{-- Side right --}}
-            {{-- Nomor ruang --}}
             <span class="bg-secondary text-white ml-auto px-4 py-1 rounded-lg text-sm font-semibold shadow-md">
                 R. 301
             </span>
         </div>
 
-
         {{-- From --}}
         <form action="{{ route('home') }}" method="" class="space-y-6 mx-8">
             @csrf
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                 {{-- Nama Peminjam --}}
@@ -73,7 +70,6 @@
 
             </div>
 
-
             {{-- Button --}}
             {{-- State Alpine.js untuk mengontrol dropup & popup --}}
             <div x-data="{ openNotif: false, confirmBatal: false }">
@@ -99,6 +95,7 @@
                             Apakah Anda yakin ingin membatalkan pengajuan ini?
                         </p>
 
+                        {{-- Button Konfirmasi --}}
                         <div class="flex justify-center space-x-2">
                             <button type="button" @click.stop="confirmBatal = false"
                                 class="px-3 py-1 bg-Subtle text-black rounded hover:bg-gray-300 transition">
@@ -121,12 +118,9 @@
 
                 </div>
 
-
-
                 {{-- Popart konfirmasi ajukan berhasil di kirim --}}
                 <div x-show="openNotif"
                     class="fixed bottom-5 right-5 bg-success text-white p-7 rounded-lg shadow-lg flex items-center space-x-4 z-50 me-17">
-
                     <div>
                         <p class="font-semibold">
                             <i class="bi bi-envelope-check-fill text-2xl mr-3"></i>
@@ -137,6 +131,7 @@
                             Pengajuan reservasi Ruang 301 telah dikirim. Status akan diperbarui setelah ditinjau.
                         </p>
 
+                        {{-- Button Konfirmasi --}}
                         <div class="mt-4 flex space-x-6 justify-center">
 
                             <a href="{{ route('riwayat') }}"
@@ -150,7 +145,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </form>
     </div>
