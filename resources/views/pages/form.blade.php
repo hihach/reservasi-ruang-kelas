@@ -95,14 +95,14 @@
                             Apakah Anda yakin ingin membatalkan pengajuan ini?
                         </p>
 
-                        {{-- Button Konfirmasi --}}
+                on Konfirmasi --}}
                         <div class="flex justify-center space-x-2">
                             <button type="button" @click.stop="confirmBatal = false"
                                 class="px-3 py-1 bg-Subtle text-black rounded hover:bg-gray-300 transition">
                                 Tidak
                             </button>
 
-                            <a href="{{ route('home') }}"
+                            <a href="{{ route('jam') }}"
                                 class="px-3 py-1 bg-error text-white rounded hover:bg-red-600 transition">
                                 Ya
                             </a>
