@@ -70,6 +70,9 @@ function initReservasiJam() {
         });
     }
 
+    // tidak tersedia
+    // <button class="bg-Subtle text-white text-sm w-full p-2 rounded-lg">
+
     // Handle klik
     function handleClick(jam) {
         if (jamDisabled(jam)) return;

@@ -20,7 +20,7 @@
 
         <div class="flex justify-center gap-6 text-sm mb-4">
             <span><i class="bi bi-door-closed"></i> 301</span>
-            <span><i class="bi bi-calendar"></i> 17/Agustus/2025</span>
+            <span><i class="bi bi-calendar3"></i> 17/Agustus/2025</span>
             <span>
                 <i class="bi bi-clock"></i>
                 <span id="summaryJamMulai"></span> -
@@ -33,10 +33,10 @@
 
     <div class="mx-8 mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md text-sm text-gray-700">
         <p class="leading-relaxed">
-            Klik <span class="font-semibold text-gray-900">jam pertama</span> untuk menentukan
-            waktu <span class="font-semibold text-green-700">mulai reservasi</span>, lalu klik
-            <span class="font-semibold text-blue-700">jam kedua</span> untuk memilih
-            waktu <span class="font-semibold text-green-700">selesai reservasi</span>.
+            Klik <span class="font-semibold text-secondary">jam pertama</span> untuk menentukan
+            waktu <span class="font-semibold text-success">mulai reservasi</span>, lalu klik
+            <span class="font-semibold text-secondary">jam kedua</span> untuk memilih
+            waktu <span class="font-semibold text-success">selesai reservasi</span>.
         </p>
     </div>
 
