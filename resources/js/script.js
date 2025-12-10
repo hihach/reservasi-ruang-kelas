@@ -61,7 +61,7 @@ function initReservasiJam() {
                     <i class="bi bi-clock-fill mr-2"></i>
                     ${jam}
                 </p>
-                <button class="bg-success text-white text-sm w-full p-2 rounded-lg">
+                <button class="bg-success hover:bg-green-700 transition-200 cursor-pointer text-white text-sm w-full p-2 rounded-lg">
                     ${getLabel(jam)}
                 </button>
             `;
@@ -71,7 +71,7 @@ function initReservasiJam() {
     }
 
     // tidak tersedia
-    // <button class="bg-Subtle text-white text-sm w-full p-2 rounded-lg">
+    // <button class="bg-Subtle text-white cursor-not-allowed text-sm w-full p-2 rounded-lg">
 
     // Handle klik
     function handleClick(jam) {
