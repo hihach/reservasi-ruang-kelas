@@ -1,60 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="p-6">
+<div class="p-6">
 
-        {{-- Header --}}
-        <div class="flex justify-between items-start mx-8">
-
-            {{-- Side Left --}}
-            <div class="flex items-start">
-
-                {{-- Tombol back --}}
-                <button onclick="window.history.back()"
-                    class="p-2 rounded-lg hover:bg-gray-400/20 text-Title cursor-pointer transition-200 mr-5">
-                    <i class="bi bi-caret-left-fill text-lg"></i>
-                </button>
-
-                {{-- Judul halaman --}}
-                <div>
-                    <h1 class="text-xl font-semibold">Reservasi Ruang 301</h1>
-                    <p class="text-sm text-gray-500 mb-4">Pilih tanggal dan jam yang tersedia</p>
-                </div>
-            </div>
-
-            {{-- Side Right --}}
-            <div class="flex items-center gap-2 bg-white px-5 py-3 rounded-lg shadow-md">
-                {{-- Input tanggal --}}
-                <input type="date" name="tanggal" id="">
-            </div>
-
-        </div>
-
-        {{-- List jam --}}
-        <div class="grid grid-cols-5 gap-6 mt-10 mx-8">
-
-            {{-- JAM TERSEDIA --}}
-            <div class="bg-white p-4 rounded-xl shadow-md text-center">
-                <p class="font-medium mb-3 text-gray-700">
-                    <i class="bi bi-clock-fill mr-3"></i>07:00
-                </p>
-
-                <button onclick="window.location='{{ route('form') }}'"
-                    class="bg-success text-sm hover:bg-green-600 text-white w-full p-2 cursor-pointer rounded-lg transition-200">
-                    Ajukan
-                </button>
-            </div>
-
-            {{-- JAM TIDAK TERSEDIA --}}
-            <div class="bg-white p-4 rounded-xl shadow-md text-center">
-                <p class="font-medium mb-3 text-gray-700">
-                    <i class="bi bi-clock-fill mr-3"></i>14:00
-                </p>
-
-                <button class="bg-gray-400 text-sm text-white w-full p-2 rounded-lg cursor-not-allowed">
-                    Ajukan
-                </button>
-            </div>
-        </div>
+    {{-- Header --}}
+    <div class="flex justify-between items-center mx-8">
+        <h1 class="text-xl font-semibold">Reservasi Ruang 301</h1>
+        <input type="date" class="border rounded-md p-2 text-sm">
     </div>
+
+    {{-- Jam --}}
+    <div id="jamContainer" class="grid grid-cols-5 gap-6 mt-10 mx-8"></div>
+
+    {{-- Summary --}}
+    <div id="summaryBox"
+        class="mt-10 mx-8 bg-white rounded-xl shadow-md p-6 hidden opacity-0 transition-opacity duration-300">
+
+        <h3 class="font-semibold text-center mb-4">Reservasi</h3>
+
+        <div class="flex justify-center gap-6 text-sm mb-4">
+            <span><i class="bi bi-door-closed"></i> 301</span>
+            <span><i class="bi bi-calendar"></i> 17/Agustus/2025</span>
+            <span>
+                <i class="bi bi-clock"></i>
+                <span id="summaryJamMulai"></span> -
+                <span id="summaryJamSelesai"></span>
+            </span>
+        </div>
+
+        <button class="bg-success text-white w-full p-3 rounded-xl">Lanjut Reservasi</button>
+    </div>
+
+    <div class="mx-8 mt-6 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md text-sm text-gray-700">
+        <p class="leading-relaxed">
+            Klik <span class="font-semibold text-gray-900">jam pertama</span> untuk menentukan
+            waktu <span class="font-semibold text-green-700">mulai reservasi</span>, lalu klik
+            <span class="font-semibold text-blue-700">jam kedua</span> untuk memilih
+            waktu <span class="font-semibold text-green-700">selesai reservasi</span>.
+        </p>
+    </div>
+
+</div>
+
+
+
 @endsection

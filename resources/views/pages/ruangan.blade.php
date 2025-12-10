@@ -4,59 +4,39 @@
     <div class="p-6">
         {{-- Header --}}
         <div class="flex justify-between mx-8 items-center mb-6">
-            {{-- Side left --}}
-            <!-- x-data = state Alpine untuk buka/tutup dropdown -->
-            <div x-data="{ open: false }" class="relative inline-block">
-                <button @click="open = !open"
+
+            {{-- Side Left --}}
+            <div id="lantaiWrapper" class="relative inline-block">
+
+                <button id="btnLantai"
                     class="flex items-center space-x-2 bg-secondary cursor-pointer text-white pl-5 pr-2 py-2 rounded-lg shadow hover:bg-blue-700 transition">
                     <span>Lantai 1</span>
                     <i class="bi bi-caret-right-fill ml-5"></i>
                 </button>
 
-                <!-- Dropdown Horizontal -->
-                <!-- x-show = tampil jika open = true -->
-                <!-- @click.outside = tutup jika klik area luar -->
-                <!-- x-transition = animasi smooth -->
-                <div x-show="open" @click.outside="open = false"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 -translate-x-3"
-                    x-transition:enter-end="opacity-100 translate-x-0"
-                    x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100 translate-x-0"
-                    x-transition:leave-end="opacity-0 -translate-x-3"
-                    class="absolute top-1/2 -translate-y-1/2 left-full ml-4 flex space-x-3 z-50">
+                <!-- Dropdown -->
+                <div id="dropdownLantai"
+                    class="absolute top-1/2 -translate-y-1/2 left-full ml-4 flex space-x-3 z-50 opacity-0 hidden transition-all duration-200 -translate-x-3">
 
-                    <!-- Tombol lantai lain -->
-                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">
-                        2
-                    </button>
+                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">2</button>
+                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">3</button>
+                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">4</button>
+                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">5</button>
 
-                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">
-                        3
-                    </button>
-
-                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">
-                        4
-                    </button>
-
-                    <button class="bg-gray-200 hover:bg-gray-300 px-4 py-2 cursor-pointer rounded-lg shadow-md">
-                        5
-                    </button>
                 </div>
             </div>
 
-            {{-- Side right --}}
+            {{-- Side Right --}}
             <div class="relative w-80">
-
-                <!-- Icon Search -->
                 <i class="bi bi-search absolute left-3 top-2 text-gray-400"></i>
 
-                <!-- Input -->
                 <input type="text" placeholder="Cari ruangan disini..."
                     class="w-full pl-10 pr-3 py-2 rounded-lg shadow-md cursor-pointer bg-white 
-                           focus:ring-2 focus:ring-blue-400 outline-none transition">
+            focus:ring-2 focus:ring-blue-400 outline-none transition">
             </div>
+
         </div>
+
 
         <!-- list ruangan -->
         <div class="grid grid-cols-4 mx-8 gap-4">

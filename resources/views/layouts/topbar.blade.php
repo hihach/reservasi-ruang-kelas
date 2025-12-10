@@ -41,13 +41,8 @@
         <div class="flex items-center me-15 space-x-6">
 
             {{-- Notifikasi --}}
-            <a href="{{ route('notifikasi') }}"
-                class="flex items-center py-2 px-5 rounded-md transition-200
-                {{ request()->routeIs('notifikasi')
-                    ? 'bg-white text-secondary'
-                    : 'text-gray-300 hover:bg-gray-200/20 hover:text-gray-200' }}">
-                <i class="bi bi-bell-fill text-xl"></i>
-            </a>
+            <x-notification-popup />
+
 
             {{-- Akun --}}
             <a href="{{ route('akun') }}"
@@ -62,45 +57,9 @@
             <div class="w-px h-6 bg-gray-300"></div>
 
             {{-- Keluar --}}
-            {{-- menggunakan Alpine.js --}}
-            <div x-data="{ openLogout: false }" class="relative">
+            <div id="logoutWrapper" class="relative">
+                <x-logout-dropdown />
 
-                {{-- Tombol buka dropdown logout --}}
-                <button @click="openLogout = !openLogout"
-                    class="bg-red-500 cursor-pointer hover:bg-red-600 text-white px-3 py-1 rounded flex items-center space-x-2">
-                    <span>Keluar</span>
-                </button>
-
-                {{-- Konfirmasi keluar --}}
-                <div x-show="openLogout" @click.outside="openLogout = false" x-transition
-                    class="absolute right-0 mt-2 w-68 bg-white shadow-lg rounded-lg py-4 px-7 z-10">
-
-                    <h5 class="text-black font-semibold text-lg">
-                        <i class="bi bi-box-arrow-right text-error mr-3"></i>
-                        Konfirmasi Keluar
-                    </h5>
-
-                    <p class="text-black mb-3 text-sm mt-1">
-                        Apakah Anda yakin ingin keluar?
-                    </p>
-
-                    {{-- Button konfirmasi --}}
-                    <div class="flex justify-center space-x-2">
-
-                        <button @click="openLogout = false"
-                            class="px-3 py-1 bg-Subtle text-black rounded hover:bg-gray-300 transition-200">
-                            Batal
-                        </button>
-
-                        <form action="{{ route('login') }}" method="">
-                            @csrf
-                            <button type="submit"
-                                class="px-3 py-1 bg-error text-white rounded hover:bg-red-600 transition-200">
-                                Keluar
-                            </button>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
