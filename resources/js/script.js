@@ -1,5 +1,5 @@
 // ========================
-// halaman jam.blade.php
+// halaman pages/jam.blade.php
 // ========================
 // Data awal
 const jamList = [
@@ -109,7 +109,7 @@ function initReservasiJam() {
 document.addEventListener("DOMContentLoaded", initReservasiJam);
 
 // ========================
-// KELUAR topbar.blade.php
+// KELUAR components/logout-dropdown.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logoutBtn");
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================
-// POPUP NOTIFIKASI topbar.blade.php
+// POPUP NOTIFIKASI components/notifikasi-popup.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     const notifBtn = document.getElementById("notifBtn");
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================
-// DROPRIGHT LANTAI ruang.blade.php
+// DROPRIGHT LANTAI pages/ruang.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     const btnLantai = document.getElementById("btnLantai");
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================
-// halaman form form.blade.php
+// halaman form pages/form.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     // ========= BATAL =========
