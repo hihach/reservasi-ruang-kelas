@@ -1,5 +1,5 @@
 // ========================
-// KELUAR
+// KELUAR components/logout-dropdown.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logoutBtn");
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================
-// POPUP NOTIFIKASI
+// POPUP NOTIFIKASI components/notifikasi-popup.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     const notifBtn = document.getElementById("notifBtn");
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================
-// DROPRIGHT LANTAI
+// DROPRIGHT LANTAI pages/ruang.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     const btnLantai = document.getElementById("btnLantai");
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 // ========================
-// Halaman form
+// halaman form pages/form.blade.php
 // ========================
 document.addEventListener("DOMContentLoaded", () => {
     const btnBatal = document.getElementById("btn-batal");
