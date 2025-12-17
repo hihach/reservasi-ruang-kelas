@@ -3,7 +3,7 @@
 
         {{-- Side Left --}}
         <div class="flex items-center space-x-2">
-            <span class="text-3xl ms-15 font-bold">SIRuang</span>
+            <a href="/" class="text-3xl ms-15 font-bold">SIRuang</a>
         </div>
 
         {{-- Side Middle --}}
@@ -19,7 +19,7 @@
             </a>
 
             {{-- Reservasi --}}
-            <a href="{{ route('ruangan') }}"
+            <a href="{{ route('ruangan.index') }}"
                 class="px-4 py-2 rounded-md transition-200
                 {{ request()->routeIs('ruangan', 'jam', 'form')
                     ? 'bg-white text-secondary font-semibold shadow-sm'
@@ -45,13 +45,13 @@
 
 
             {{-- Akun --}}
-            <a href="{{ route('akun') }}"
+            <a href="{{ route('profile.edit') }}"
                 class="flex items-center space-x-2 py-2 px-3 rounded-md transition-200
                 {{ request()->routeIs('akun')
                     ? 'bg-white text-secondary'
                     : 'text-gray-300 hover:bg-gray-200/20 hover:text-gray-200' }}">
                 <i class="bi bi-person-circle"></i>
-                <span>John Doe</span>
+                <span>{{ auth()->user()->nama ?? 'Tamu' }}</span>
             </a>
 
             <div class="w-px h-6 bg-gray-300"></div>

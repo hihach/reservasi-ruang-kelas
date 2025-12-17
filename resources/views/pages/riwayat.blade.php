@@ -1,88 +1,121 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex gap-8 p-6 mx-8">
+    <div class="flex flex-col md:flex-row gap-8 p-6 mx-4 md:mx-8">
 
-        {{-- Sidebar --}}
-        <div class="w-45 flex flex-col gap-3">
+        {{-- Sidebar Filter --}}
+        <div class="w-full md:w-64 flex flex-col gap-3">
+            <h3 class="font-bold text-gray-700 mb-2 flex items-center">
+                <i class="bi bi-funnel-fill mr-2 text-secondary"></i> Filter Status
+            </h3>
 
-            <h3><i class="bi bi-funnel-fill mr-2"></i> Filter</h3>
+            {{-- Helper function buat ngecek status aktif --}}
+            @php
+                $currentStatus = request('status');
+                $btnBase = 'block text-center py-2.5 rounded-lg shadow-sm font-medium transition duration-200 border';
+                $btnActive = 'bg-secondary text-white border-secondary';
+                $btnInactive = 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-secondary';
+            @endphp
 
-            <button class="py-2 border cursor-pointer rounded-lg bg-secondary text-white shadow-md font-medium">
+            <a href="{{ route('riwayat') }}" class="{{ $btnBase }} {{ !$currentStatus ? $btnActive : $btnInactive }}">
                 Semua
-            </button>
+            </a>
 
-            <button class="py-2 rounded-lg cursor-pointer bg-gray-200 hover:bg-gray-300 shadow-md transition-200">
+            <a href="{{ route('riwayat', ['status' => 'disetujui']) }}"
+                class="{{ $btnBase }} {{ $currentStatus == 'disetujui' ? $btnActive : $btnInactive }}">
                 Disetujui
-            </button>
+            </a>
 
-            <button class="py-2 rounded-lg cursor-pointer bg-gray-200 hover:bg-gray-300 shadow-md transition-200">
+            <a href="{{ route('riwayat', ['status' => 'menunggu']) }}"
+                class="{{ $btnBase }} {{ $currentStatus == 'menunggu' ? $btnActive : $btnInactive }}">
                 Menunggu
-            </button>
+            </a>
 
-            <button class="py-2 rounded-lg cursor-pointer bg-gray-200 hover:bg-gray-300 shadow-md transition-200">
+            <a href="{{ route('riwayat', ['status' => 'ditolak']) }}"
+                class="{{ $btnBase }} {{ $currentStatus == 'ditolak' ? 'bg-red-500 text-white border-red-500' : $btnInactive }}">
                 Ditolak
-            </button>
+            </a>
         </div>
 
-        {{-- List riwayat --}}
-        <div class="flex-1 grid gap-6 grid-cols-1 md:grid-cols-2 auto-rows-max">
+        {{-- List Riwayat (Looping) --}}
+        <div class="flex-1 grid gap-6 grid-cols-1 xl:grid-cols-2 auto-rows-max">
 
-            {{-- Disetuju --}}
-            <div class="bg-white rounded-xl shadow-md p-5 flex justify-between items-start gap-4 max-w-xl w-full">
-                <div>
-                    <h2 class="text-lg font-semibold">Ruang 301 Disetujui</h2>
+            @forelse($riwayat as $item)
+                @php
+                    // Tentukan warna & icon berdasarkan status
+                    $statusColor = 'text-gray-500';
+                    $icon = 'bi-question-circle';
+                    $statusLabel = 'Unknown';
 
-                    <div class="flex items-center gap-2 mt-2 text-gray-600 text-sm">
-                        <i class="bi bi-calendar3"></i>
-                        <span>Senin, 17 Agustus 2025 (08:00 - 12:00 WIB)</span>
+                    if ($item->status === \App\StatusReservasi::DITERIMA) {
+                        $statusColor = 'text-green-600';
+                        $icon = 'bi-check-circle-fill';
+                        $statusLabel = 'Disetujui';
+                    } elseif ($item->status === \App\StatusReservasi::PENDING) {
+                        $statusColor = 'text-yellow-500';
+                        $icon = 'bi-hourglass-split';
+                        $statusLabel = 'Menunggu';
+                    } elseif ($item->status === \App\StatusReservasi::DITOLAK) {
+                        $statusColor = 'text-red-600';
+                        $icon = 'bi-x-circle-fill';
+                        $statusLabel = 'Ditolak';
+                    }
+                @endphp
+
+                <div
+                    class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex justify-between items-start gap-4 w-full hover:shadow-md transition duration-200">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h2 class="text-lg font-bold text-gray-800">{{ $item->kelas->nama_kelas }}</h2>
+                            <span
+                                class="text-xs font-semibold px-2 py-0.5 rounded-full border {{ $statusColor }} bg-opacity-10 border-opacity-20">
+                                {{ $statusLabel }}
+                            </span>
+                        </div>
+
+                        {{-- Tanggal & Jam --}}
+                        <div class="flex items-center gap-2 mt-2 text-gray-600 text-sm">
+                            <i class="bi bi-calendar3 text-secondary"></i>
+                            <span>
+                                {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l, d M Y') }}
+                                <span class="font-mono text-xs bg-gray-100 px-1 rounded ml-1">
+                                    {{ substr($item->jam_mulai, 0, 5) }} - {{ substr($item->jam_selesai, 0, 5) }}
+                                </span>
+                            </span>
+                        </div>
+
+                        {{-- Waktu Update --}}
+                        <div class="flex items-center gap-2 mt-1 text-gray-500 text-xs">
+                            <i class="bi bi-clock-history"></i>
+                            <span>Update: {{ $item->updated_at->diffForHumans() }}</span>
+                        </div>
+
+                        {{-- Alasan (Kegiatan) --}}
+                        <div class="mt-3 text-sm text-gray-700 italic border-l-2 border-gray-200 pl-3">
+                            "{{ Str::limit($item->alasan, 50) }}"
+                        </div>
                     </div>
 
-                    <div class="flex items-center gap-2 mt-1 text-gray-600 text-sm">
-                        <i class="bi bi-clock"></i>
-                        <span>Disetujui: 10 Agustus, 07:00 WIB</span>
-                    </div>
+                    {{-- Icon Status Besar di Kanan --}}
+                    <i class="bi {{ $icon }} {{ $statusColor }} text-3xl opacity-80"></i>
                 </div>
-                <i class="bi bi-check-circle-fill text-success text-2xl"></i>
-            </div>
 
-            {{-- Menunggu --}}
-            <div class="bg-white rounded-xl shadow-md p-5 flex justify-between items-start gap-4 max-w-xl w-full">
-                <div>
-                    <h2 class="text-lg font-semibold">Ruang 301 Menunggu</h2>
-
-                    <div class="flex items-center gap-2 mt-2 text-gray-600 text-sm">
-                        <i class="bi bi-calendar3"></i>
-                        <span>Senin, 17 Agustus 2025 (08:00 - 12:00 WIB)</span>
-                    </div>
-
-                    <div class="flex items-center gap-2 mt-1 text-gray-600 text-sm">
-                        <i class="bi bi-clock"></i>
-                        <span>Menunggui: 10 Agustus, 07:00 WIB</span>
-                    </div>
+            @empty
+                {{-- Empty State --}}
+                <div
+                    class="col-span-full flex flex-col items-center justify-center py-16 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+                    <i class="bi bi-inbox text-4xl text-gray-300 mb-3"></i>
+                    <h3 class="text-gray-900 font-medium">Tidak ada riwayat reservasi</h3>
+                    <p class="text-gray-500 text-sm">Coba ubah filter atau buat reservasi baru.</p>
                 </div>
-                <i class="bi bi-hourglass-split text-warning text-2xl"></i>
-            </div>
-
-            {{-- Ditolak --}}
-            <div class="bg-white rounded-xl shadow-md p-5 flex justify-between items-start gap-4 max-w-xl w-full">
-                <div>
-                    <h2 class="text-lg font-semibold">Ruang 301 Ditolak</h2>
-
-                    <div class="flex items-center gap-2 mt-2 text-gray-600 text-sm">
-                        <i class="bi bi-calendar3"></i>
-                        <span>Senin, 17 Agustus 2025 (08:00 - 12:00 WIB)</span>
-                    </div>
-
-                    <div class="flex items-center gap-2 mt-1 text-gray-600 text-sm">
-                        <i class="bi bi-clock"></i>
-                        <span>Ditolak: 10 Agustus, 07:00 WIB</span>
-                    </div>
-                </div>
-                <i class="bi bi-x-circle-fill text-error text-2xl"></i>
-            </div>
+            @endforelse
 
         </div>
 
+    </div>
+
+    {{-- Pagination --}}
+    <div class="mx-8 mb-8">
+        {{ $riwayat->links() }}
     </div>
 @endsection

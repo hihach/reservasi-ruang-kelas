@@ -1,142 +1,116 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="p-8">
+    <div class="p-8 max-w-5xl mx-auto">
         {{-- Header --}}
-        <div class="flex items-center mb-6 mx-8">
-            {{-- Side left --}}
+        <div class="flex items-center mb-6 px-4">
             <div>
                 <h1 class="text-xl font-semibold">Form Pengajuan Ruangan</h1>
-                <p class="text-gray-500 text-sm">Isi data reservasi untuk kegiatanmu</p>
+                <p class="text-gray-500 text-sm">Pastikan data di bawah ini sudah benar.</p>
             </div>
-
-            {{-- Side right --}}
             <span class="bg-secondary text-white ml-auto px-4 py-1 rounded-lg text-sm font-semibold shadow-md">
-                R. 301
+                {{ $dataReservasi['nama_kelas'] }}
             </span>
         </div>
 
-        {{-- From --}}
-        <form action="{{ route('home') }}" method="" class="space-y-6 mx-8">
+        {{-- Form Utama --}}
+        <form action="{{ route('reservasi.store') }}" method="POST" class="space-y-6 px-4">
             @csrf
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                {{-- Nama Peminjam --}}
-                <div class="bg-white rounded-lg p-4 shadow-md">
-                    <label class="text-sm font-medium">Nama Peminjam</label>
-                    <input type="text" name="nama"
-                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 focus:ring focus:ring-blue-400 outline-none"
-                        placeholder="John Doe">
+            {{-- HIDDEN INPUTS (Data dari halaman sebelumnya) --}}
+            <input type="hidden" name="id_kelas" value="{{ $dataReservasi['id_kelas'] }}">
+            <input type="hidden" name="tanggal" value="{{ $dataReservasi['tanggal'] }}">
+            <input type="hidden" name="jam_mulai" value="{{ $dataReservasi['jam_mulai'] }}">
+            <input type="hidden" name="jam_selesai" value="{{ $dataReservasi['jam_selesai'] }}">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                {{-- Nama Peminjam (Readonly) --}}
+                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                    <label class="text-sm font-medium text-gray-700">Nama Peminjam</label>
+                    <input type="text" value="{{ Auth::user()->nama }}" readonly
+                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 bg-gray-50 text-gray-500 cursor-not-allowed">
                 </div>
 
-                {{-- NIM --}}
-                <div class="bg-white rounded-lg p-4 shadow-md">
-                    <label class="text-sm font-medium">NIM</label>
-                    <input type="text" name="nim"
-                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 focus:ring focus:ring-blue-400 outline-none"
-                        placeholder="230509089">
+                {{-- NIM / Username (Readonly) --}}
+                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                    <label class="text-sm font-medium text-gray-700">NIM / NID</label>
+                    <input type="text" value="{{ Auth::user()->nim }}" readonly
+                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 bg-gray-50 text-gray-500 cursor-not-allowed">
                 </div>
 
-                {{-- Kegiatan --}}
-                <div class="bg-white rounded-lg p-4 shadow-md">
-                    <label class="text-sm font-medium">Kegiatan</label>
-                    <input type="text" name="kegiatan"
-                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 focus:ring focus:ring-blue-400 outline-none"
-                        placeholder="-">
+                {{-- Tanggal (Readonly) --}}
+                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                    <label class="text-sm font-medium text-gray-700">Tanggal Booking</label>
+                    <input type="text" value="{{ \Carbon\Carbon::parse($dataReservasi['tanggal'])->format('d M Y') }}"
+                        readonly
+                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 bg-gray-50 text-gray-500 cursor-not-allowed">
                 </div>
 
-                {{-- Jumlah Peserta --}}
-                <div class="bg-white rounded-lg p-4 shadow-md">
-                    <label class="text-sm font-medium">Jumlah Peserta</label>
-                    <input type="number" name="peserta"
-                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 focus:ring focus:ring-blue-400 outline-none"
-                        placeholder="40">
+                {{-- Waktu (Readonly) --}}
+                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+                    <label class="text-sm font-medium text-gray-700">Waktu</label>
+                    <input type="text" value="{{ $dataReservasi['jam_mulai'] }} - {{ $dataReservasi['jam_selesai'] }}"
+                        readonly
+                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 bg-gray-50 text-gray-500 cursor-not-allowed font-mono">
                 </div>
 
-                {{-- Tanggal --}}
-                <div class="bg-white rounded-lg p-4 shadow-md">
-                    <label class="text-sm font-medium">Tanggal</label>
-                    <input type="date" name="tanggal"
-                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 focus:ring focus:ring-blue-400 outline-none">
+                {{-- Kegiatan (Wajib Isi) --}}
+                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100 md:col-span-2">
+                    <label class="text-sm font-medium text-gray-700">Nama Kegiatan <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="alasan" required
+                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-secondary outline-none transition"
+                        placeholder="Contoh: Rapat Himpunan Mahasiswa">
                 </div>
-
-                {{-- Waktu --}}
-                <div class="bg-white rounded-lg p-4 shadow-md">
-                    <label class="text-sm font-medium">Waktu</label>
-                    <input type="text" name="waktu"
-                        class="w-full mt-2 px-3 py-2 rounded-md border border-gray-200 focus:ring focus:ring-blue-300 outline-none"
-                        placeholder="08:00 - 12:00">
-                </div>
-
             </div>
 
-            {{-- Button --}}
-            <div class="flex justify-end space-x-3 relative mt-10">
-
-                <!-- Tombol Batal -->
+            {{-- Buttons --}}
+            <div class="flex justify-end space-x-3 mt-10 relative">
                 <button type="button" id="btn-batal"
-                    class="px-5 py-2 rounded-md bg-error shadow-md transition text-white hover:bg-red-700">
+                    class="px-5 py-2.5 rounded-lg bg-red-100 text-red-600 font-medium hover:bg-red-200 transition">
                     Batal
                 </button>
 
-                <!-- Popup Konfirmasi Batal -->
-                <div id="popup-batal"
-                    class="fixed bottom-20 right-5 w-72 bg-white shadow-lg rounded-lg py-4 px-6 z-20 mx-15 hidden">
-
-                    <h3 class="text-black text-lg font-semibold flex items-center">
-                        <i class="bi bi-x-circle mr-2 text-error"></i>
-                        Konfirmasi Pembatalan
-                    </h3>
-
-                    <p class="text-black text-xs mt-1 mb-3">
-                        Apakah Anda yakin ingin membatalkan pengajuan ini?
-                    </p>
-
-                    <div class="flex justify-center space-x-2">
-                        <button type="button" id="batal-tidak"
-                            class="px-3 py-1 bg-Subtle text-black rounded hover:bg-gray-300 transition">
-                            Tidak
-                        </button>
-
-                        <a href="{{ route('jam') }}"
-                            class="px-3 py-1 bg-error text-white rounded hover:bg-red-600 transition">
-                            Ya
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Tombol Ajukan -->
-                <button type="button" id="btn-ajukan"
-                    class="px-5 py-2 rounded-md transition shadow-md bg-success text-white hover:bg-green-700">
+                <button type="submit"
+                    class="px-6 py-2.5 rounded-lg bg-success text-white font-semibold shadow-md hover:bg-green-700 hover:shadow-lg transition">
                     Ajukan Pengajuan
                 </button>
             </div>
 
-            <!-- Popup Ajukan -->
-            <div id="popup-ajukan"
-                class="fixed bottom-5 right-5 bg-success text-white p-7 rounded-lg shadow-lg flex items-center space-x-4 z-50 hidden me-17">
-                <div>
-                    <p class="font-semibold">
-                        <i class="bi bi-envelope-check-fill text-2xl mr-3"></i>
-                        Pengajuan berhasil dikirim
-                    </p>
-                    <p class="text-sm mt-2">
-                        Pengajuan reservasi Ruang 301 telah dikirim. Status akan diperbarui setelah ditinjau.
-                    </p>
-
-                    <div class="mt-4 flex space-x-6 justify-center">
-                        <a href="{{ route('riwayat') }}" class="px-3 py-1 bg-white text-success rounded hover:bg-gray-100">
-                            Lihat Riwayat
-                        </a>
-
-                        <button id="ajukan-tutup" class="px-3 py-1 bg-error rounded hover:bg-red-600">
-                            Tutup
-                        </button>
+            {{-- POPUP BATAL --}}
+            <div id="popup-batal" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden flex items-center justify-center">
+                <div class="bg-white w-80 p-6 rounded-xl shadow-2xl transform scale-95 transition-transform duration-200">
+                    <h3 class="text-lg font-bold flex items-center text-gray-800 mb-2">
+                        <i class="bi bi-exclamation-circle text-red-500 mr-2"></i> Konfirmasi
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-6">Yakin mau membatalkan proses booking ini?</p>
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" id="batal-tidak"
+                            class="px-4 py-2 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200">Lanjut Booking</button>
+                        <a href="{{ route('ruangan.index') }}"
+                            class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Ya, Batal</a>
                     </div>
                 </div>
             </div>
 
-
         </form>
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const btnBatal = document.getElementById("btn-batal");
+                const popupBatal = document.getElementById("popup-batal");
+                const batalTidak = document.getElementById("batal-tidak");
+
+                btnBatal.addEventListener("click", () => popupBatal.classList.remove("hidden"));
+                batalTidak.addEventListener("click", () => popupBatal.classList.add("hidden"));
+
+                // Klik background tutup popup
+                popupBatal.addEventListener("click", (e) => {
+                    if (e.target === popupBatal) popupBatal.classList.add("hidden");
+                });
+            });
+        </script>
+    @endpush
 @endsection

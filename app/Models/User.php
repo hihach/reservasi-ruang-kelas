@@ -2,47 +2,60 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\UserRole;
+use Filament\Models\Contracts\HasName;
+use Filament\Models\Contracts\FilamentUser; // (Opsional: Kalau lo pake proteksi admin)
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasName
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        'name',
+        'nama',
+        'nim',
+        'username',
         'email',
         'password',
+        'role',
+        'agama',
+        'jenis_kelamin',
+        'Angkatan',
+        'Kelas',
+        'Status',
+        'program_studi',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $guarded = ['id']; // Biar semua kolom bisa diisi kecuali ID
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $casts = [
+        'password' => 'hashed',
+        'role' => UserRole::class, // Auto convert ke Enum
+    ];
+    public function getFilamentName(): string
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        // Kita paksa Filament baca kolom 'nama'
+        // Pake operator ?? '' biar kalau null dia return string kosong (anti error)
+        return $this->nama ?? 'Tanpa Nama';
+    }
+    // Relasi: Satu user bisa punya banyak reservasi
+    public function reservasi()
+    {
+        return $this->hasMany(Reservasi::class, 'id_user');
+    }
+
+    // Relasi: Satu user bisa punya banyak notifikasi
+    public function notifikasi()
+    {
+        return $this->hasMany(Notifikasi::class, 'id_user');
+    }
+
+    // Helper: Cek apakah dia admin
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::ADMIN;
     }
 }

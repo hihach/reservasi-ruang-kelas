@@ -18,15 +18,13 @@
         </p>
 
         <div class="flex justify-center space-x-2">
-            <button id="cancelLogout"
-                class="px-3 py-1 bg-Subtle text-black rounded hover:bg-gray-300 transition-200">
+            <button id="cancelLogout" class="px-3 py-1 bg-Subtle text-black rounded hover:bg-gray-300 transition-200">
                 Batal
             </button>
 
-            <form action="{{ route('login') }}" method="">
+            <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit"
-                    class="px-3 py-1 bg-error text-white rounded hover:bg-red-600 transition-200">
+                <button type="submit" class="px-3 py-1 bg-error text-white rounded hover:bg-red-600 transition-200">
                     Keluar
                 </button>
             </form>

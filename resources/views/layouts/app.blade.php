@@ -11,9 +11,10 @@
 
     {{-- Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/script.js'])
+
 </head>
 
-<body class="bg-page font-inter">
+<body class="bg-page font-sans">
 
     {{-- TOPBAR --}}
     @include('layouts.topbar')
@@ -25,7 +26,7 @@
 
     {{-- FOOTER --}}
     @include('layouts.footer')
-
+    @stack('scripts')
 </body>
 
 </html>

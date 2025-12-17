@@ -9,16 +9,27 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('nama');
+            $table->string('nim')->unique();
+            $table->string('username')->unique();
             $table->string('password');
+            $table->string('email')->unique()->nullable();
+
+            // Enum role: admin / user
+            $table->enum('role', ['user', 'admin'])->default('user');
+
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamps(); // create_at & updated_at
+            $table->string('agama', 100)->nullable();
+            $table->string('jenis_kelamin', 100)->nullable();
+            $table->integer('Angkatan')->nullable(); // Perhatiin huruf 'A' besar
+            $table->string('Kelas', 100)->nullable();    // Huruf 'K' besar
+            $table->string('Status', 100)->nullable();   // Huruf 'S' besar
+            $table->string('program_studi', 100)->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
