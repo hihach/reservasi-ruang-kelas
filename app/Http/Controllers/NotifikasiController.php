@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 
 class NotifikasiController extends Controller
 {
-    /**
-     * List semua notifikasi user
-     */
 
     protected function markQueryAsRead($query)
     {
@@ -26,7 +23,6 @@ class NotifikasiController extends Controller
         $baseQuery = Reservasi::where('id_user', auth()->id())
             ->where('status', '!=', StatusReservasi::PENDING);
 
-        // auto read
         $this->markQueryAsRead(
             (clone $baseQuery)->whereNull('read_at')
         );
@@ -38,9 +34,6 @@ class NotifikasiController extends Controller
 
         return view('pages.notifikasi', compact('notifikasi'));
     }
-    /**
-     * Tandai notifikasi sudah dibaca
-     */
 
     public function markAsRead($id)
     {
@@ -51,10 +44,6 @@ class NotifikasiController extends Controller
 
         return back();
     }
-
-    /**
-     * Tandai SEMUA notifikasi dibaca (tombol popup)
-     */
     public function clearAll()
     {
         $this->markQueryAsRead(

@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('notifikasi', function (Blueprint $table) {
             $table->id();
 
-            // Kalau user dihapus, notifikasinya ilang gapapa (Cascade)
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
 
             $table->text('pesan');
-            $table->boolean('is_read')->default(false); // 0 = belum baca, 1 = sudah
+            $table->boolean('is_read')->default(false);
 
             $table->timestamps();
         });

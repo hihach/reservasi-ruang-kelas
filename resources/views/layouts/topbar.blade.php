@@ -21,7 +21,7 @@
             {{-- Reservasi --}}
             <a href="{{ route('ruangan.index') }}"
                 class="px-4 py-2 rounded-md transition-200
-                {{ request()->routeIs('ruangan', 'jam', 'form')
+                {{ request()->routeIs('ruangan.*', 'reservasi.*')
                     ? 'bg-white text-secondary font-semibold shadow-sm'
                     : 'text-gray-300 hover:text-white hover:bg-gray-200/20' }}">
                 Reservasi
@@ -30,7 +30,7 @@
             {{-- Riyawat --}}
             <a href="/riwayat"
                 class="px-4 py-2 rounded-md transition-200
-                {{ request()->is('riwayat')
+                {{ request()->routeis('riwayat', 'notifikasi.index')
                     ? 'bg-white text-secondary font-semibold shadow-sm'
                     : 'text-gray-300 hover:bg-gray-200/20 hover:text-white' }}">
                 Riwayat

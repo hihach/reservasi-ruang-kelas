@@ -9,10 +9,9 @@ class Lantai extends Model
 {
     use HasFactory;
 
-    protected $table = 'lantai'; // Paksa nama tabel (takutnya Laravel nyari 'lantais')
+    protected $table = 'lantai';
     protected $guarded = ['id'];
 
-    // Relasi: Satu lantai punya banyak kelas
     public function kelas()
     {
         return $this->hasMany(Kelas::class, 'id_lantai');

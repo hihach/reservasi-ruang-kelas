@@ -10,9 +10,6 @@ use Carbon\Carbon;
 
 class ReservasiController extends Controller
 {
-    /**
-     * Menampilkan Halaman Booking dengan Grid Kotak-Kotak
-     */
     public function create(Request $request)
     {
         $kelasId = $request->input('class_id');
@@ -23,15 +20,11 @@ class ReservasiController extends Controller
         }
 
         $kelas = Kelas::with('lantai')->findOrFail($kelasId);
-
-        // A. Generate Jam Operasional (Biar JS gak perlu hardcode)
-        // Misal buka jam 08:00 sampai 17:00
         $jamOperasional = [];
         for ($jam = 8; $jam < 22; $jam++) {
             $jamOperasional[] = sprintf("%02d:00", $jam);
         }
 
-        // B. Ambil jam yang SUDAH DIBOOKING
         $bookedSlots = Reservasi::where('id_kelas', $kelasId)
             ->whereDate('tanggal', $tanggal)
             ->where('status', '!=', StatusReservasi::DITOLAK)
@@ -43,15 +36,10 @@ class ReservasiController extends Controller
                 ];
             });
 
-        // Jangan lupa kirim $jamOperasional ke view
         return view('pages.jam', compact('kelas', 'tanggal', 'bookedSlots', 'jamOperasional'));
     }
-    /**
-     * Proses Simpan ke Database (Dengan Validasi Anti-Bentrok)
-     */
     public function store(Request $request)
     {
-        // 1. Validasi Input Dasar
         $request->validate([
             'id_kelas' => 'required|exists:kelas,id',
             'tanggal' => 'required|date|after_or_equal:today',
@@ -60,8 +48,6 @@ class ReservasiController extends Controller
             'alasan' => 'required|string|max:255',
         ]);
 
-        // 2. VALIDASI FINAL (Anti-Bentrok / Race Condition)
-        // Cek lagi ke database, takutnya pas user mikir, udah ada yang booking duluan
         $bentrok = Reservasi::where('id_kelas', $request->id_kelas)
             ->where('tanggal', $request->tanggal)
             ->where('status', '!=', StatusReservasi::DITOLAK)
@@ -75,7 +61,6 @@ class ReservasiController extends Controller
             return back()->with('error', 'Waduh! Jam segitu barusan banget diambil orang lain. Coba jam lain ya!');
         }
 
-        // 3. Simpan Data
         Reservasi::create([
             'id_user' => auth()->id(),
             'id_kelas' => $request->id_kelas,
@@ -83,10 +68,9 @@ class ReservasiController extends Controller
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
             'alasan' => $request->alasan,
-            'status' => StatusReservasi::PENDING, // Pake Enum biar aman
+            'status' => StatusReservasi::PENDING,
         ]);
 
-        // 4. Balikin ke halaman booking dengan pesan sukses
 
         return redirect()->route('reservasi.create', [
             'class_id' => $request->id_kelas,
@@ -96,12 +80,10 @@ class ReservasiController extends Controller
 
     public function tampilkanForm(Request $request)
     {
-        // Validasi simpel biar ga error kalau user nembak URL sembarangan
         if (!$request->class_id || !$request->start || !$request->end) {
             return redirect()->route('ruangan.index')->with('error', 'Data tidak lengkap');
         }
 
-        // Pake findOrFail biar kalau ID diotak-atik jadi 404 Not Found (Lebih aman)
         $kelas = Kelas::findOrFail($request->class_id);
 
         $dataReservasi = [

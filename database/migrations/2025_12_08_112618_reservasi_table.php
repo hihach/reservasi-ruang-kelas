@@ -15,17 +15,13 @@ return new class extends Migration
         Schema::create('reservasi', function (Blueprint $table) {
             $table->id();
 
-            // Foreign Key ke Users & Kelas
-            // PENTING: Pake 'restrict'. Kalau User/Kelas dihapus, reservasi ini TETAP ADA (error kalau dipaksa hapus).
-            // Ini biar history laporan lo gak rusak.
             $table->foreignId('id_user')->constrained('users')->onDelete('restrict');
             $table->foreignId('id_kelas')->constrained('kelas')->onDelete('restrict');
 
-            // Ganti Slot ID dengan Time Range (Flexible)
             $table->time('jam_mulai');   // 09:00:00
             $table->time('jam_selesai'); // 11:00:00
 
-            $table->date('tanggal');     // 2025-12-06
+            $table->date('tanggal');
             $table->text('alasan');
 
             // Status Reservation

@@ -5,18 +5,9 @@ use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\RiwayatController;
-use App\Http\Controllers\RuangController; // <-- Jangan lupa import Controller baru ini
+use App\Http\Controllers\RuangController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Peta Jalan Aplikasi (Updated)
-| Sekarang semua logic sudah rapi masuk ke Controller masing-masing.
-|
-*/
 
 // =========================================================================
 // 1. HALAMAN UTAMA (DASHBOARD)
@@ -37,18 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    // --- B. FITUR RUANGAN (List & Filter) ---
-    // Menggunakan RuangController yang baru lo kasih.
-
-    // 1. List Semua Ruangan (Bisa Filter Lantai & Search dari Controller)
     Route::get('/ruangan', [RuangController::class, 'index'])->name('ruangan.index');
 
 
 
-    // --- C. ALUR BOOKING (RESERVASI) ---
-
-    // 1. Pilih Jam (Grid Kotak-Kotak)
-    // URL: /booking?class_id=1&date=2024-12-12
     Route::get('/booking', [ReservasiController::class, 'create'])->name('reservasi.create');
 
     // 2. Form Review & Input Alasan
@@ -58,15 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/booking', [ReservasiController::class, 'store'])->name('reservasi.store');
 
 
-    // --- D. FITUR MONITORING & NOTIFIKASI ---
-
-    // 1. Riwayat Reservasi
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat');
 
-    // 2. Notifikasi
     Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
 
-    // (Tambahan) Aksi tandai sudah dibaca & hapus semua
     Route::post('/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
     Route::post('/notifikasi/clear', [NotifikasiController::class, 'clearAll'])->name('notifikasi.clear');
 });

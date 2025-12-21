@@ -23,7 +23,7 @@
 
     <div class="absolute inset-0 bg-primary/75"></div>
 
-    <div class="relative z-10 container mx-auto px-6 flex justify-between items-center">
+    <div class="relative z-10 container mx-auto px-20 flex justify-between items-center">
         {{-- Side Left --}}
         <div class="w-1/2 ms-30">
             <h1 class="text-4xl text-white font-bold mb-3">SIRuang</h1>

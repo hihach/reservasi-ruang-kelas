@@ -2,24 +2,25 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use App\Models\Lantai;
 
 class LantaiSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        $now = Carbon::now();
+        Lantai::create([
+            'nama' => 'AdminSira',
+            'nim' => '00000000',
+            'username' => 'superadmin',
+        'password' => Hash::make('password'),
+            'email' => 'admin@campus.ac.id',
+            'role' => 'admin',
 
-        $dataLantai = [];
-        for ($i = 2; $i <= 4; $i++) {
-            $dataLantai[] = [
-                'nama_lantai' => 'Lantai ' . $i,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ];
-        }
-        DB::table('lantai')->insert($dataLantai);
+        ]);
     }
 }

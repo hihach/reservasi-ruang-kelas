@@ -10,12 +10,10 @@ class RiwayatController extends Controller
 {
     public function index(Request $request)
     {
-        // Query Dasar: Ambil punya user yang login
         $query = Reservasi::with('kelas')
             ->where('id_user', auth()->id())
             ->orderBy('created_at', 'desc');
 
-        // Logic Filter dari URL (?status=...)
         if ($request->has('status')) {
             switch ($request->status) {
                 case 'disetujui':
@@ -30,7 +28,7 @@ class RiwayatController extends Controller
             }
         }
 
-        $riwayat = $query->paginate(10); // Paginasi biar gak berat
+        $riwayat = $query->paginate(10);
 
         return view('pages.riwayat', compact('riwayat'));
     }

@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
 
-            // Foreign Key ke tabel 'lantai'
-            // Kita pakai nama kolom 'id_lantai' sesuai request lo
             $table->foreignId('id_lantai')->constrained('lantai')->onDelete('cascade');
 
-            $table->string('nama_kelas'); // Contoh: 'Lab Komputer A'
+            $table->string('nama_kelas');
             $table->integer('kapasitas');
             $table->timestamps();
         });

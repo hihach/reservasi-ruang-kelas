@@ -78,23 +78,23 @@
                 </button>
             </div>
 
-            {{-- POPUP BATAL --}}
-            <div id="popup-batal" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden flex items-center justify-center">
-                <div class="bg-white w-80 p-6 rounded-xl shadow-2xl transform scale-95 transition-transform duration-200">
-                    <h3 class="text-lg font-bold flex items-center text-gray-800 mb-2">
-                        <i class="bi bi-exclamation-circle text-red-500 mr-2"></i> Konfirmasi
-                    </h3>
-                    <p class="text-gray-600 text-sm mb-6">Yakin mau membatalkan proses booking ini?</p>
-                    <div class="flex justify-end space-x-2">
-                        <button type="button" id="batal-tidak"
-                            class="px-4 py-2 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200">Lanjut Booking</button>
-                        <a href="{{ route('ruangan.index') }}"
-                            class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Ya, Batal</a>
-                    </div>
-                </div>
-            </div>
+
 
         </form>
+    </div>
+    <div id="popup-batal" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden flex items-center justify-center">
+        <div class="bg-white w-80 p-6 rounded-xl shadow-2xl transform scale-95 transition-transform duration-200">
+            <h3 class="text-lg font-bold flex items-center text-gray-800 mb-2">
+                <i class="bi bi-exclamation-circle text-red-500 mr-2"></i> Konfirmasi
+            </h3>
+            <p class="text-gray-600 text-sm mb-6">Yakin mau membatalkan proses booking ini?</p>
+            <div class="flex justify-end space-x-2">
+                <button type="button" id="batal-tidak"
+                    class="px-4 py-2 bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200">Lanjut Booking</button>
+                <a href="{{ route('ruangan.index') }}"
+                    class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Ya, Batal</a>
+            </div>
+        </div>
     </div>
     @push('scripts')
         <script>

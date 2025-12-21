@@ -19,16 +19,15 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->unique()->nullable();
 
-            // Enum role: admin / user
             $table->enum('role', ['user', 'admin'])->default('user');
 
             $table->rememberToken();
             $table->timestamps(); // create_at & updated_at
             $table->string('agama', 100)->nullable();
             $table->string('jenis_kelamin', 100)->nullable();
-            $table->integer('Angkatan')->nullable(); // Perhatiin huruf 'A' besar
-            $table->string('Kelas', 100)->nullable();    // Huruf 'K' besar
-            $table->string('Status', 100)->nullable();   // Huruf 'S' besar
+            $table->integer('Angkatan')->nullable();
+            $table->string('Kelas', 100)->nullable();
+            $table->string('Status', 100)->nullable();
             $table->string('program_studi', 100)->nullable();
         });
 
