@@ -15,7 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/script.js'])
 </head>
 
 <body class="bg-gray-200 min-h-screen flex items-center justify-center bg-cover font-inter"
@@ -55,10 +55,12 @@
                     {{-- Password --}}
                     <label class="block text-sm font-medium mb-1">Kata Sandi</label>
                     <div class="relative">
-                        <input type="password" name="password" placeholder="Masukkan kata sandi" required
+                        <input type="password" id="password" name="password" placeholder="Masukkan kata sandi" required
                             class="w-full bg-white shadow-md rounded-md px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        <button type="button" class="absolute right-3 top-2.5 text-gray-500">
-                            <i class="bi bi-eye-slash"></i>
+
+                        <button type="button" id="togglePassword"
+                            class="absolute right-3 top-2.5 text-gray-500 hover:text-gray-700">
+                            <i id="eyeIcon" class="bi bi-eye-slash"></i>
                         </button>
                     </div>
 

@@ -160,3 +160,24 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === popupBatal) popupBatal.classList.add("hidden");
     });
 });
+
+// ========================
+// HIDE PASSWORD views/login.blade.php
+// ========================
+document.addEventListener("DOMContentLoaded", () => {
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    // Kalau elemen gak ada (misalnya di halaman lain), stop
+    if (!togglePassword || !passwordInput || !eyeIcon) return;
+
+    togglePassword.addEventListener("click", () => {
+        const isPassword = passwordInput.type === "password";
+
+        passwordInput.type = isPassword ? "text" : "password";
+
+        eyeIcon.classList.toggle("bi-eye");
+        eyeIcon.classList.toggle("bi-eye-slash");
+    });
+});
