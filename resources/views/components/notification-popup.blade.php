@@ -1,5 +1,5 @@
 @php
-    $isNotifPage = request()->routeIs('notifikasi');
+    $isNotifPage = request()->routeIs('notifikasi.index');
 @endphp
 
 <div id="notifWrapper" class="relative">

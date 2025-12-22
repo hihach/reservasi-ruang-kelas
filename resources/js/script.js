@@ -7,37 +7,57 @@ document.addEventListener("DOMContentLoaded", () => {
     const cancelLogout = document.getElementById("cancelLogout");
     const wrapper = document.getElementById("logoutWrapper");
 
-    let open = false;
+    let isOpen = false;
 
-    function toggleDropdown() {
-        open = !open;
+    function toggleDropdown(show) {
+        isOpen = show;
 
-        if (open) {
-            logoutDropdown.classList.remove("hidden");
-            setTimeout(() => logoutDropdown.classList.add("opacity-100"), 10);
+        if (show) {
+            // Hapus invisible dulu agar elemen ada di DOM
+            logoutDropdown.classList.remove("invisible");
+
+            // Beri sedikit delay agar browser merender transisi opacity & scale
+            requestAnimationFrame(() => {
+                logoutDropdown.classList.remove("opacity-0", "scale-95");
+                logoutDropdown.classList.add("opacity-100", "scale-100");
+            });
         } else {
-            logoutDropdown.classList.remove("opacity-100");
-            setTimeout(() => logoutDropdown.classList.add("hidden"), 200);
+            // Mulai transisi menghilang
+            logoutDropdown.classList.remove("opacity-100", "scale-100");
+            logoutDropdown.classList.add("opacity-0", "scale-95");
+
+            // Tunggu transisi selesai (200ms) baru set invisible
+            setTimeout(() => {
+                if (!isOpen) {
+                    // Cek lagi jaga-jaga user klik cepat
+                    logoutDropdown.classList.add("invisible");
+                }
+            }, 200);
         }
     }
 
-    // Klik tombol keluar
+    // Toggle saat tombol diklik
     logoutBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        toggleDropdown();
+        toggleDropdown(!isOpen);
     });
 
-    // Klik tombol batal
+    // Tombol Batal
     cancelLogout.addEventListener("click", () => {
-        open = true;
-        toggleDropdown();
+        toggleDropdown(false);
     });
 
-    // Klik di luar dropdown → close
+    // Klik di luar area
     document.addEventListener("click", (e) => {
-        if (!wrapper.contains(e.target) && open) {
-            open = true;
-            toggleDropdown();
+        if (!wrapper.contains(e.target) && isOpen) {
+            toggleDropdown(false);
+        }
+    });
+
+    // Tombol ESC
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && isOpen) {
+            toggleDropdown(false);
         }
     });
 });

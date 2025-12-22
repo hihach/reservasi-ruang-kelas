@@ -30,7 +30,7 @@
             {{-- Riyawat --}}
             <a href="/riwayat"
                 class="px-4 py-2 rounded-md transition-200
-                {{ request()->routeis('riwayat', 'notifikasi.index')
+                {{ request()->routeis('riwayat')
                     ? 'bg-white text-secondary font-semibold shadow-sm'
                     : 'text-gray-300 hover:bg-gray-200/20 hover:text-white' }}">
                 Riwayat
@@ -47,7 +47,7 @@
             {{-- Akun --}}
             <a href="{{ route('profile.edit') }}"
                 class="flex items-center space-x-2 py-2 px-3 rounded-md transition-200
-                {{ request()->routeIs('akun')
+                {{ request()->routeIs('profile.*')
                     ? 'bg-white text-secondary'
                     : 'text-gray-300 hover:bg-gray-200/20 hover:text-gray-200' }}">
                 <i class="bi bi-person-circle"></i>

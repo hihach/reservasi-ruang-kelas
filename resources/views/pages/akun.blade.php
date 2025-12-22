@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="p-10 mx-8">
+    <div class="px-1 py-10">
 
-        <div class="bg-white p-8 rounded-3xl shadow-md max-w-3xl">
+        <div class="bg-white p-8 rounded-3xl shadow-md max-w-4xl">
+
             <h1 class="text-xl font-semibold mb-6">Profil Akun</h1>
+
 
             <div class="grid grid-cols-2 gap-y-5 gap-x-10">
 
