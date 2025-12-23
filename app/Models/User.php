@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Panel;
 
-class User extends Authenticatable implements HasName
+class User extends Authenticatable implements HasName, FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -49,6 +50,11 @@ class User extends Authenticatable implements HasName
     }
 
     public function isAdmin(): bool
+    {
+        return $this->role === UserRole::ADMIN;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
     {
         return $this->role === UserRole::ADMIN;
     }
