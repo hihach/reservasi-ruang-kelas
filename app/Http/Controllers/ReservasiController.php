@@ -6,6 +6,7 @@ use App\Models\Kelas;
 use App\Models\Reservasi;
 use App\StatusReservasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class ReservasiController extends Controller
@@ -62,7 +63,7 @@ class ReservasiController extends Controller
         }
 
         Reservasi::create([
-            'id_user' => auth()->id(),
+            'id_user' => Auth::id(),
             'id_kelas' => $request->id_kelas,
             'tanggal' => $request->tanggal,
             'jam_mulai' => $request->jam_mulai,
@@ -87,13 +88,13 @@ class ReservasiController extends Controller
         $kelas = Kelas::findOrFail($request->class_id);
 
         $dataReservasi = [
-            'id_kelas' => $request->class_id,
+            'id_kelas' => $request->kelas_id,
             'tanggal' => $request->date,
             'jam_mulai' => $request->start,
             'jam_selesai' => $request->end,
             'nama_kelas' => $kelas->nama_kelas
         ];
 
-        return view('pages.form', compact('dataReservasi'));
+        return view('pages.fo   rm', compact('dataReservasi'));
     }
 }

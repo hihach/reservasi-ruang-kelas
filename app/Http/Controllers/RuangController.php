@@ -2,32 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Kelas;
 use App\Models\Lantai;
-use Illuminate\Http\Request;
 
 class RuangController extends Controller
 {
     public function index(Request $request)
     {
-        $semuaLantai = Lantai::orderBy('id')->get();
-
-
         $query = Kelas::with('lantai');
 
+        // 🔥 filter lantai (WAJIB pakai id_lantai)
+        if ($request->filled('lantai')) {
+            $query->where('id_lantai', $request->lantai);
+        }
+
+        // 🔥 search optional
         if ($request->filled('search')) {
             $query->where('nama_kelas', 'like', '%' . $request->search . '%');
         }
 
-        if ($request->has('lantai')) {
-            $query->where('id_lantai', $request->lantai);
-            $namaLantaiTerpilih = optional($semuaLantai->firstWhere('id', $request->lantai))->nama_lantai ?? 'Pilih Lantai';
-        } else {
-            $namaLantaiTerpilih = 'Pilih Lantai';
-        }
+        $semuaKelas = $query->get();
 
-        $semuaKelas = $query->paginate(12)->withQueryString();
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'kelas' => $semuaKelas
+            ]
+        ]);
+    }
 
-        return view('pages.ruangan', compact('semuaLantai', 'semuaKelas', 'namaLantaiTerpilih'));
+    // 🔥 detail ruangan (untuk room-detail screen)
+    public function show($id)
+    {
+        $kelas = Kelas::with('lantai')->findOrFail($id);
+
+        return response()->json([
+            'status' => true,
+            'data' => $kelas
+        ]);
     }
 }

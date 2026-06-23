@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Notifikasi;
 use App\Models\Reservasi;
 use App\StatusReservasi;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class NotifikasiController extends Controller
@@ -20,7 +21,7 @@ class NotifikasiController extends Controller
     public function index()
     {
 
-        $baseQuery = Reservasi::where('id_user', auth()->id())
+        $baseQuery = Reservasi::where('id_user', Auth::id())
             ->where('status', '!=', StatusReservasi::PENDING);
 
         $this->markQueryAsRead(
@@ -38,7 +39,7 @@ class NotifikasiController extends Controller
     public function markAsRead($id)
     {
         $this->markQueryAsRead(
-            Reservasi::where('id_user', auth()->id())
+            Reservasi::where('id_user', Auth::id())
                 ->where('id', $id)
         );
 
@@ -47,7 +48,7 @@ class NotifikasiController extends Controller
     public function clearAll()
     {
         $this->markQueryAsRead(
-            Reservasi::where('id_user', auth()->id())
+            Reservasi::where('id_user', Auth::id())
         );
 
         return back()->with('success', 'Semua notifikasi ditandai dibaca');
