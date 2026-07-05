@@ -64,14 +64,6 @@
                         </button>
                     </div>
 
-                    <div class="flex justify-between items-center mb-4 text-xs">
-                        <label class="flex items-center">
-                            <input type="checkbox" name="remember" class="mr-2"> Ingat saya
-                        </label>
-                        <a href="#" class="text-blue-600 hover:underline">
-                            Lupa kata sandi?
-                        </a>
-                    </div>
 
                     <button type="submit"
                         class="w-full bg-primary cursor-pointer text-white py-2 rounded-md hover:bg-secondary transition duration-200">

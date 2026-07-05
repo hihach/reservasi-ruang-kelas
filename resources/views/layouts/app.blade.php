@@ -29,4 +29,22 @@
     @stack('scripts')
 </body>
 
+@auth
+    <script>
+        // Jalankan pengecekan setiap 5 detik (5000 milidetik)
+        setInterval(function() {
+            fetch("{{ route('notifikasi.cek') }}")
+                .then(response => response.json())
+                .then(data => {
+                    // Jika Laravel mendeteksi ada perubahan data / notifikasi baru
+                    if (data.ada_update === true) {
+                        // Langsung reload halaman secara otomatis
+                        window.location.reload();
+                    }
+                })
+                .catch(error => console.error('Gagal mengecek update:', error));
+        }, 5000);
+    </script>
+@endauth
+
 </html>

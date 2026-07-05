@@ -7,7 +7,8 @@ use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\RuangController;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Reservasi;
+use Illuminate\Support\Facades\Auth;
 
 // =========================================================================
 // 1. HALAMAN UTAMA (DASHBOARD)
@@ -47,6 +48,19 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
     Route::post('/notifikasi/clear', [NotifikasiController::class, 'clearAll'])->name('notifikasi.clear');
+    Route::get('/cek-notifikasi-baru', function () {
+        if (!Auth::check()) {
+            return response()->json(['ada_update' => false]);
+        }
+
+        // Cek apakah ada notifikasi/reservasi terbaru yang statusnya berubah
+        // dan belum dibaca (read_at masih null)
+        $adaUpdate = Reservasi::where('user_id', Auth::id())
+            ->whereNull('read_at') // atau logika indikator lain di DB lu
+            ->exists();
+
+        return response()->json(['ada_update' => $adaUpdate]);
+    })->name('notifikasi.cek');
 });
 
 // =========================================================================
