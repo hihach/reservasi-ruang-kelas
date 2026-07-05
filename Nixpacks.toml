@@ -1,0 +1,1 @@
+cmd = "node /assets/json-index.js && php artisan migrate --force --seed && heroku-php-apache2 public/"
