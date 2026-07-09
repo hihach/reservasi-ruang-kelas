@@ -23,7 +23,11 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
+{
+    // Paksa HTTPS jika di production (Railway)
+    if (config('app.env') === 'production' || isset($_SERVER['HTTPS'])) {
+            URL::forceScheme('https');
+        }
 
         View::composer('*', function ($view) {
             if (!auth()->check()) {
