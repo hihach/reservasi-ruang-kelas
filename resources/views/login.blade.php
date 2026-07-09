@@ -28,7 +28,7 @@
         <div class="w-1/2 ms-30">
             <h1 class="text-4xl text-white font-bold mb-3">SIRuang</h1>
             <p class="text-white text-lg">
-                Sistem Informasi Ruangan Universitas Yatsi Madani
+                Sistem Informasi Ruang Universitas Yatsi Madani
             </p>
         </div>
 
