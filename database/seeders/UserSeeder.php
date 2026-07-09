@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        Lantai::create([
+        User::create([
             'nama' => 'AdminSira',
             'nim' => '00000000',
             'username' => 'superadmin',
