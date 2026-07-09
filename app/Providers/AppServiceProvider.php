@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use App\Models\Reservasi;
 use App\StatusReservasi;
@@ -23,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-{
-    // Paksa HTTPS jika di production (Railway)
-    if (config('app.env') === 'production' || isset($_SERVER['HTTPS'])) {
+    {
+        // Paksa HTTPS jika di production (Railway)
+        if (config('app.env') === 'production' || isset($_SERVER['HTTPS'])) {
             URL::forceScheme('https');
         }
 
