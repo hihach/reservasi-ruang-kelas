@@ -26,6 +26,8 @@ return new class extends Migration
 
             // Status Reservation
             $table->enum('status', ['pending', 'diterima', 'ditolak'])->default('pending');
+            // Tracking status baca admin/user
+            $table->timestamp('read_at')->nullable();
 
             $table->timestamps();
         });

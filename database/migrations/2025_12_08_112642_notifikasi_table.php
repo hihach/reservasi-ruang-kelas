@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('notifikasi', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
-
             $table->text('pesan');
             $table->boolean('is_read')->default(false);
-
+            $table->timestamp('read_at')->nullable(); // <-- TAMBAHKAN INI
             $table->timestamps();
         });
     }
